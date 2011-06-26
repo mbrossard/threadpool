@@ -1,18 +1,18 @@
 /*
  * Copyright (c) 2011, Mathias Brossard <mathias@brossard.org>.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  *  1. Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *  2. Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -43,7 +43,7 @@
 #include <sys/un.h>
 
 /**
- *
+ * @brief Write on network socket
  * @param fd
  * @param buf
  * @param count
@@ -51,7 +51,7 @@
 ssize_t nw_nwrite(int fd, const void *buf, size_t count);
 
 /**
- *
+ * @brief Read from network socket
  * @param fd
  * @param buf
  * @param count
@@ -59,7 +59,7 @@ ssize_t nw_nwrite(int fd, const void *buf, size_t count);
 ssize_t nw_nread(int fd, void *buf, size_t count);
 
 /**
- *
+ * @brief Connect client UNIX domain socket
  * @param path
  * @param unixaddr
  * @return filedes on socket on success, -1 on error and errno is set appropriately
@@ -67,7 +67,7 @@ ssize_t nw_nread(int fd, void *buf, size_t count);
 int nw_unix_client(const char *path, struct sockaddr_un *unixaddr);
 
 /**
- *
+ * @brief Bind server UNIX domain socket
  * @param path
  * @param rights
  * @param uid
@@ -79,7 +79,7 @@ int nw_unix_server(const char *path, struct sockaddr_un *unixaddr,
                    mode_t rights, uid_t uid, gid_t gid, int backlog);
 
 /**
- *
+ * @brief Connect client in TCP domain.
  * @param host
  * @param port
  * @param inetaddr
@@ -88,7 +88,7 @@ int nw_unix_server(const char *path, struct sockaddr_un *unixaddr,
 int nw_tcp_client(const char *host, int port, struct sockaddr_in *inetaddr);
 
 /**
- *
+ * @brief Bind socket in TCP domain.
  * @param port
  * @param address
  * @param backlog
