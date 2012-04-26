@@ -72,6 +72,7 @@ struct threadpool_t {
   int queue_size;
   int head;
   int tail;
+  int count;
   int shutdown;
   int started;
 };
@@ -99,18 +100,19 @@ threadpool_t *threadpool_create(int thread_count, int queue_size, int flags)
     /* Initialize */
     pool->thread_count = thread_count;
     pool->queue_size = queue_size;
-    pool->head = pool->tail = 0;
-    pool->shutdown = 0;
-    pool->started = 0;
+    pool->head = pool->tail = pool->count = 0;
+    pool->shutdown = pool->started = 0;
+
+    /* Allocate thread and task queue */
+    pool->threads = (pthread_t *)malloc(sizeof (pthread_t) * thread_count);
+    pool->queue = (threadpool_task_t *)malloc
+        (sizeof (threadpool_task_t) * queue_size);
 
     /* Initialize mutex and conditional variable first */
     if((pthread_mutex_init(&(pool->lock), NULL) != 0) ||
        (pthread_cond_init(&(pool->notify), NULL) != 0) ||
-       /* Allocate thread and task queue */
-       ((pool->threads = (pthread_t *)malloc
-         (sizeof (pthread_t) * thread_count)) == NULL) ||
-       ((pool->queue = (threadpool_task_t *)malloc
-         (sizeof (threadpool_task_t) * queue_size)) == NULL)) {
+       (pool->threads == NULL) ||
+       (pool->queue == NULL)) {
         goto err;
     }
 
@@ -153,7 +155,7 @@ int threadpool_add(threadpool_t *pool, void (*function)(void *),
 
     do {
         /* Are we full ? */
-        if(next == pool->head) {
+        if(pool->count == pool->queue_size) {
             err = threadpool_queue_full;
             break;
         }
@@ -163,11 +165,12 @@ int threadpool_add(threadpool_t *pool, void (*function)(void *),
             err = threadpool_shutdown;
             break;
         }
-        
+
         /* Add task to queue */
         pool->queue[pool->tail].function = function;
         pool->queue[pool->tail].argument = argument;
         pool->tail = next;
+        pool->count += 1;
 
         /* pthread_cond_broadcast */
         if(pthread_cond_signal(&(pool->notify)) != 0) {
@@ -179,6 +182,7 @@ int threadpool_add(threadpool_t *pool, void (*function)(void *),
     if(pthread_mutex_unlock(&pool->lock) != 0) {
         err = threadpool_lock_failure;
     }
+
     return err;
 }
 
@@ -263,7 +267,7 @@ static void *threadpool_thread(void *threadpool)
 
         /* Wait on condition variable, check for spurious wakeups.
            When returning from pthread_cond_wait(), we own the lock. */
-        while((pool->tail == pool->head) && (!pool->shutdown)) {
+        while((pool->count == 0) && (!pool->shutdown)) {
             pthread_cond_wait(&(pool->notify), &(pool->lock));
         }
 
@@ -276,6 +280,7 @@ static void *threadpool_thread(void *threadpool)
         task.argument = pool->queue[pool->head].argument;
         pool->head += 1;
         pool->head = (pool->head == pool->queue_size) ? 0 : pool->head;
+        pool->count -= 1;
 
         /* Unlock */
         pthread_mutex_unlock(&(pool->lock));
