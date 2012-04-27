@@ -44,6 +44,7 @@ int main(int argc, char **argv)
 
     for(i = 0; i < QUEUES; i++) {
         pool[i] = threadpool_create(THREAD, SIZE, 0);
+        assert(pool[i] != NULL);
     }
 
     usleep(10);
