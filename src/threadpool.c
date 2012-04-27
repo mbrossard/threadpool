@@ -215,7 +215,7 @@ int threadpool_destroy(threadpool_t *pool, int flags)
         }
 
         /* Join all worker thread */
-        for(i = 0; i < pool->started; i++) {
+        for(i = 0; i < pool->thread_count; i++) {
             if(pthread_join(pool->threads[i], NULL) != 0) {
                 err = threadpool_thread_failure;
             }
