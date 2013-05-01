@@ -271,7 +271,7 @@ static void *threadpool_thread(void *threadpool)
             pthread_cond_wait(&(pool->notify), &(pool->lock));
         }
 
-        if(pool->shutdown) {
+        if(pool->shutdown && pool->count ==0) {
             break;
         }
 
