@@ -105,15 +105,15 @@ threadpool_t *threadpool_create(int thread_count, int queue_size, int flags)
     }
 
     /* Initialize */
-    pool->thread_count = thread_count;
+    pool->thread_count = 0;
     pool->queue_size = queue_size;
     pool->head = pool->tail = pool->count = 0;
     pool->shutdown = pool->started = 0;
 
     /* Allocate thread and task queue */
-    pool->threads = (pthread_t *)malloc(sizeof (pthread_t) * thread_count);
+    pool->threads = (pthread_t *)malloc(sizeof(pthread_t) * thread_count);
     pool->queue = (threadpool_task_t *)malloc
-        (sizeof (threadpool_task_t) * queue_size);
+        (sizeof(threadpool_task_t) * queue_size);
 
     /* Initialize mutex and conditional variable first */
     if((pthread_mutex_init(&(pool->lock), NULL) != 0) ||
@@ -129,9 +129,9 @@ threadpool_t *threadpool_create(int thread_count, int queue_size, int flags)
                           threadpool_thread, (void*)pool) != 0) {
             threadpool_destroy(pool, 0);
             return NULL;
-        } else {
-            pool->started++;
         }
+        pool->thread_count++;
+        pool->started++;
     }
 
     return pool;
