@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Mathias Brossard <mathias@brossard.org>.
+ * Copyright (c) 2013, Mathias Brossard <mathias@brossard.org>.
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@
 
 /**
  * @file threadpool.h
- * @brief Threadpool Header file
+ * @brief Threadpool Header File
  */
 
 typedef struct threadpool_t threadpool_t;

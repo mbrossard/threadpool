@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Mathias Brossard <mathias@brossard.org>.
+ * Copyright (c) 2013, Mathias Brossard <mathias@brossard.org>.
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -66,7 +66,9 @@ typedef struct {
  *  @var queue_size   Size of the task queue.
  *  @var head         Index of the first element.
  *  @var tail         Index of the next element.
+ *  @var count        Number of pending tasks
  *  @var shutdown     Flag indicating if the pool is shutting down
+ *  @var started      Number of started threads
  */
 struct threadpool_t {
   pthread_mutex_t lock;
