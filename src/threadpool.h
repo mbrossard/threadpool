@@ -44,6 +44,10 @@ typedef enum {
     threadpool_thread_failure = -5
 } threadpool_error_t;
 
+typedef enum {
+    threadpool_graceful       = 1
+} threadpool_destroy_flags_t;
+
 /**
  * @function threadpool_create
  * @brief Creates a threadpool_t object.
@@ -71,7 +75,11 @@ int threadpool_add(threadpool_t *pool, void (*routine)(void *),
  * @function threadpool_destroy
  * @brief Stops and destroys a thread pool.
  * @param pool  Thread pool to destroy.
- * @param flags Unused parameter.
+ * @param flags Flags for shutdown
+ *
+ * Known values for flags are 0 (default) and threadpool_graceful in
+ * which case the thread pool doesn't accept any new tasks but
+ * processes all pending tasks before shutdown.
  */
 int threadpool_destroy(threadpool_t *pool, int flags);
 

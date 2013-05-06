@@ -6,10 +6,11 @@ CFLAGS += -g
 LDFLAGS += -g
 endif
 
-TARGETS = tests/thrdtest tests/heavy
+TARGETS = tests/thrdtest tests/heavy tests/shutdown
 
 all: $(TARGETS)
 
+tests/shutdown: tests/shutdown.o src/threadpool.o
 tests/thrdtest: tests/thrdtest.o src/threadpool.o
 tests/heavy: tests/heavy.o src/threadpool.o
 src/threadpool.o: src/threadpool.c src/threadpool.h

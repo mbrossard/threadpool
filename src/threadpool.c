@@ -37,6 +37,11 @@
 
 #include "threadpool.h"
 
+typedef enum {
+    immediate_shutdown = 1,
+    graceful_shutdown  = 2
+} threadpool_shutdown_t;
+
 /**
  *  @struct threadpool_task
  *  @brief the work struct
@@ -205,7 +210,8 @@ int threadpool_destroy(threadpool_t *pool, int flags)
             break;
         }
 
-        pool->shutdown = 1;
+        pool->shutdown = (flags & threadpool_graceful) ?
+            graceful_shutdown : immediate_shutdown;
 
         /* Wake up all worker threads */
         if((pthread_cond_broadcast(&(pool->notify)) != 0) ||
@@ -271,7 +277,9 @@ static void *threadpool_thread(void *threadpool)
             pthread_cond_wait(&(pool->notify), &(pool->lock));
         }
 
-        if(pool->shutdown) {
+        if((pool->shutdown == immediate_shutdown) ||
+           ((pool->shutdown == graceful_shutdown) &&
+            (pool->count == 0))) {
             break;
         }
 
