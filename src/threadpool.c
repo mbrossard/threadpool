@@ -230,10 +230,6 @@ int threadpool_destroy(threadpool_t *pool, int flags)
         }
     } while(0);
 
-    if(pthread_mutex_unlock(&pool->lock) != 0) {
-        err = threadpool_lock_failure;
-    }
-    
     /* Only if everything went well do we deallocate the pool */
     if(!err) {
         threadpool_free(pool);
