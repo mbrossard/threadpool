@@ -17,7 +17,6 @@ some additional options:
  * Lazy creation of threads (easy)
  * Reduce number of threads automatically (hard)
  * Unlimited queue size (medium)
- * Allow queued task to be processed on destroy (medium)
  * Kill worker threads on destroy (hard, dangerous)
  * Support Windows API (medium)
  * Reduce locking contention (medium/hard)
