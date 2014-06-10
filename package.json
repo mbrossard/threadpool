@@ -1,0 +1,9 @@
+{
+  "name": "threadpool",
+  "version": "0.0.1",
+  "repo": "jlcordeiro/threadpool",
+  "description": "Simple C Thread pool implementation.",
+  "keywords": ["thread", "posix"],
+  "license": "MIT",
+  "src": ["src/threadpool.c", "src/threadpool.h"]
+}
