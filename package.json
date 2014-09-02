@@ -1,7 +1,7 @@
 {
   "name": "threadpool",
   "version": "0.0.1",
-  "repo": "jlcordeiro/threadpool",
+  "repo": "mbrossard/threadpool",
   "description": "Simple C Thread pool implementation.",
   "keywords": ["thread", "posix"],
   "license": "MIT",
