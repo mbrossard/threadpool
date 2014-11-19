@@ -1,5 +1,5 @@
 CFLAGS = -D_REENTRANT -Wall -pedantic -Isrc
-LDFLAGS = -lpthread
+LDLIBS = -lpthread
 
 ifdef DEBUG
 CFLAGS += -g
