@@ -17,5 +17,14 @@ src/threadpool.o: src/threadpool.c src/threadpool.h
 tests/thrdtest.o: tests/thrdtest.c src/threadpool.h
 tests/heavy.o: tests/heavy.c src/threadpool.h
 
+shared_lib:
+	cc \
+		-shared \
+		-fPIC \
+		${CFLAGS} \
+		-o libthreadpool.so \
+		src/threadpool.c \
+		${LDLIBS}
+
 clean:
-	rm -f $(TARGETS) *~ */*~ */*.o
+	rm -f $(TARGETS) *~ */*~ */*.o *.so
