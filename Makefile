@@ -26,5 +26,17 @@ shared_lib:
 		src/threadpool.c \
 		${LDLIBS}
 
+static_lib:
+	cc \
+		-c \
+		-fPIC \
+		${CFLAGS} \
+		-o libthreadpool.o \
+		src/threadpool.c \
+		${LDLIBS}
+	ar rcs \
+		libthreadpool.a \
+		libthreadpool.o
+
 clean:
 	rm -f $(TARGETS) *~ */*~ */*.o *.so
