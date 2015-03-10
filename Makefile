@@ -6,7 +6,8 @@ CFLAGS += -g
 LDFLAGS += -g
 endif
 
-TARGETS = tests/thrdtest tests/heavy tests/shutdown
+TARGETS = tests/thrdtest tests/heavy tests/shutdown \
+	libthreadpool.so libthreadpool.a
 
 all: $(TARGETS)
 
@@ -17,26 +18,18 @@ src/threadpool.o: src/threadpool.c src/threadpool.h
 tests/thrdtest.o: tests/thrdtest.c src/threadpool.h
 tests/heavy.o: tests/heavy.c src/threadpool.h
 
-shared_lib:
-	cc \
-		-shared \
-		-fPIC \
-		${CFLAGS} \
-		-o libthreadpool.so \
-		src/threadpool.c \
-		${LDLIBS}
+# Short-hand aliases
+shared: libthreadpool.so
+static: libthreadpool.a
 
-static_lib:
-	cc \
-		-c \
-		-fPIC \
-		${CFLAGS} \
-		-o libthreadpool.o \
-		src/threadpool.c \
-		${LDLIBS}
-	ar rcs \
-		libthreadpool.a \
-		libthreadpool.o
+libthreadpool.so: src/threadpool.c src/threadpool.h
+	$(CC) -shared -fPIC ${CFLAGS} -o $@ $< ${LDLIBS}
+
+src/libthreadpool.o: src/threadpool.c src/threadpool.h
+	$(CC) -c -fPIC ${CFLAGS} -o $@ $<
+
+libthreadpool.a: src/libthreadpool.o
+	ar rcs $@ $^
 
 clean:
-	rm -f $(TARGETS) *~ */*~ */*.o *.so
+	rm -f $(TARGETS) *~ */*~ */*.o
