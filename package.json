@@ -1,6 +1,6 @@
 {
   "name": "threadpool",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "repo": "mbrossard/threadpool",
   "description": "Simple C Thread pool implementation.",
   "keywords": ["thread", "posix"],
