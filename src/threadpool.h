@@ -60,6 +60,15 @@ typedef enum {
 } threadpool_destroy_flags_t;
 
 /**
+ * @function boundary_check
+ * @brief Check for invalid values of minimum and maximum threads and queue size
+ * param thread_cout Number of threads in pool
+ * param queue_size Task queue size
+ * @return a non zero value if everything is in boundary
+ */
+short boundary_check(int thread_count, int queue_size);
+
+/**
  * @function threadpool_create
  * @brief Creates a threadpool_t object.
  * @param thread_count Number of worker threads.
