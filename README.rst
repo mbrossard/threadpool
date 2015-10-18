@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mbrossard/threadpool.svg?branch=master)](https://travis-ci.org/mbrossard/threadpool)
+
 A simple C thread pool implementation
 =====================================
 

@@ -1,0 +1,16 @@
+language: c
+sudo: false
+
+branches:
+  only:
+    - master
+
+cache: apt
+
+os:
+  - linux
+  - osx
+
+script:
+  - make
+  - make test

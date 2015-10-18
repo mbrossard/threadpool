@@ -33,3 +33,9 @@ libthreadpool.a: src/libthreadpool.o
 
 clean:
 	rm -f $(TARGETS) *~ */*~ */*.o
+
+test:
+	./tests/shutdown
+	./tests/thrdtest
+	./tests/heavy
+
