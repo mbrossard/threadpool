@@ -95,10 +95,12 @@ int threadpool_free(threadpool_t *pool);
 
 threadpool_t *threadpool_create(int thread_count, int queue_size, int flags)
 {
+    if(thread_count <= 0 || thread_count > MAX_THREADS || queue_size <= 0 || queue_size > MAX_QUEUE) {
+        return NULL;
+    }
+    
     threadpool_t *pool;
     int i;
-
-    /* TODO: Check for negative or otherwise very big input parameters */
 
     if((pool = (threadpool_t *)malloc(sizeof(threadpool_t))) == NULL) {
         goto err;
