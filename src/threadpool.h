@@ -43,7 +43,7 @@ extern "C" {
  * Large values might slow down your system
  */
 #define MAX_THREADS 64
-#define MAX_QUEUE 32
+#define MAX_QUEUE 65536
 
 typedef struct threadpool_t threadpool_t;
 
@@ -58,15 +58,6 @@ typedef enum {
 typedef enum {
     threadpool_graceful       = 1
 } threadpool_destroy_flags_t;
-
-/**
- * @function boundary_check
- * @brief Check for invalid values of minimum and maximum threads and queue size
- * param thread_cout Number of threads in pool
- * param queue_size Task queue size
- * @return a non zero value if everything is in boundary
- */
-short boundary_check(int thread_count, int queue_size);
 
 /**
  * @function threadpool_create
