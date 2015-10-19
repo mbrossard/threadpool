@@ -83,14 +83,7 @@ struct threadpool_t {
   int shutdown;
   int started;
 };
-/**
- *@brief boundary check implementation 
- */
-short boundary_check(int thread_count, int queue_size)
-{
-    return ((thread_count > 0 && thread_count <= MAX_THREADS) && 
-            (queue_size > 0 && queue_size <= MAX_QUEUE)) ? 1 : 0;
-}
+
 /**
  * @function void *threadpool_thread(void *threadpool)
  * @brief the worker thread
@@ -102,8 +95,9 @@ int threadpool_free(threadpool_t *pool);
 
 threadpool_t *threadpool_create(int thread_count, int queue_size, int flags)
 {
-    if(!boundary_check(thread_count, queue_size))
+    if(thread_count <= 0 || thread_count > MAX_THREADS || queue_size <= 0 || queue_size > MAX_QUEUE) {
         return NULL;
+    }
     
     threadpool_t *pool;
     int i;
