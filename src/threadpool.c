@@ -163,7 +163,6 @@ int threadpool_add(threadpool_t *pool, void (*function)(void *),
 
     next = (pool->tail + 1) % pool->queue_size;
 
-
     do {
         /* Are we full ? */
         if(pool->count == pool->queue_size) {
@@ -289,7 +288,6 @@ static void *threadpool_thread(void *threadpool)
         task.function = pool->queue[pool->head].function;
         task.argument = pool->queue[pool->head].argument;
         pool->head = (pool->head + 1) % pool->queue_size;
-       
         pool->count -= 1;
 
         /* Unlock */
