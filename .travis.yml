@@ -7,33 +7,28 @@ branches:
 
 cache: apt
 
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    - llvm-toolchain-precise-3.8
+   packages:
+   - gcc-4.8
+   - gcc-5
+   - clang-3.8
+
 matrix:
   include:
   - os: linux
     compiler: clang
   - os: linux
     compiler: clang-3.8
-    addons:
-      apt:
-        packages: [ "clang-3.8" ]
-        sources: &sources
-          - ubuntu-toolchain-r-test
-          - llvm-toolchain-precise
-        sources: *sources
   - os: linux
     compiler: gcc
   - os: linux
     compiler: gcc-4.8
-    addons:
-      apt:
-        packages: [ "gcc-4.8" ]
-        sources: *sources
   - os: linux
     compiler: gcc-5
-    addons:
-      apt:
-        packages: [ "gcc-5" ]
-        sources: *sources
   - os: osx
     compiler: clang
     osx_image: xcode6.1
