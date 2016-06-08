@@ -101,6 +101,7 @@ threadpool_t *threadpool_create(int thread_count, int queue_size, int flags)
     
     threadpool_t *pool;
     int i;
+    (void) flags;
 
     if((pool = (threadpool_t *)malloc(sizeof(threadpool_t))) == NULL) {
         goto err;
@@ -150,6 +151,7 @@ int threadpool_add(threadpool_t *pool, void (*function)(void *),
 {
     int err = 0;
     int next;
+    (void) flags;
 
     if(pool == NULL || function == NULL) {
         return threadpool_invalid;
