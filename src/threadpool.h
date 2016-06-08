@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Mathias Brossard <mathias@brossard.org>.
+ * Copyright (c) 2016, Mathias Brossard <mathias@brossard.org>.
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -99,4 +99,3 @@ int threadpool_destroy(threadpool_t *pool, int flags);
 #endif
 
 #endif /* _THREADPOOL_H_ */
-
