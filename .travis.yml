@@ -14,6 +14,7 @@ addons:
     packages:
     - gcc-4.8
     - gcc-5
+    - gcc-6
 
 matrix:
   include:
@@ -25,6 +26,8 @@ matrix:
     compiler: gcc-4.8
   - os: linux
     compiler: gcc-5
+  - os: linux
+    compiler: gcc-6
   - os: osx
     compiler: clang
     osx_image: xcode6.1
