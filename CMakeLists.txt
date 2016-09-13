@@ -13,5 +13,5 @@ target_link_libraries(heavy ${CMAKE_THREAD_LIBS_INIT})
 add_executable(shutdown tests/shutdown.c ${ParallelUtils})
 target_link_libraries(shutdown ${CMAKE_THREAD_LIBS_INIT})
 
-add_executable(thrdtest tests/thrdtest.c ${ParallelUtils})
-target_link_libraries(shutdown ${CMAKE_THREAD_LIBS_INIT})
+add_executable(thirdtest tests/thirdtest.c ${ParallelUtils})
+target_link_libraries(thirdtest ${CMAKE_THREAD_LIBS_INIT})
