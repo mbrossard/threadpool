@@ -18,8 +18,7 @@ void dummy_task(void *arg) {
     pthread_mutex_unlock(&lock);
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     threadpool_t *pool;
 
     pthread_mutex_init(&lock, NULL);
@@ -28,7 +27,7 @@ int main(int argc, char **argv)
     fprintf(stderr, "Pool started with %d threads and "
             "queue size of %d\n", THREAD, QUEUE);
 
-    while(threadpool_add(pool, &dummy_task, NULL, 0) == 0) {
+    while (threadpool_add(pool, &dummy_task, NULL, 0) == 0) {
         pthread_mutex_lock(&lock);
         tasks++;
         pthread_mutex_unlock(&lock);
@@ -36,7 +35,7 @@ int main(int argc, char **argv)
 
     fprintf(stderr, "Added %d tasks\n", tasks);
 
-    while((tasks / 2) > done) {
+    while ((tasks / 2) > done) {
         usleep(10000);
     }
     assert(threadpool_destroy(pool, 0) == 0);

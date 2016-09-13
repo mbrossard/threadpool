@@ -22,3 +22,27 @@ some additional options:
  * Kill worker threads on destroy (hard, dangerous)
  * Support Windows API (medium)
  * Reduce locking contention (medium/hard)
+ 
+Update of Cmake Build Support
+=====================
+If your operating system installs [cmake](https://cmake.org/), then you could do as follows.   
+
+- create a build dir, in current dir
+```zsh
+mkdir build
+```
+
+- enter into the build dir
+```zsh
+cd build
+```
+
+- then generate the makefile
+```zsh
+cmake ..
+```
+
+- then make in parallel
+```zsh
+make -j
+```

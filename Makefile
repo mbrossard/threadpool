@@ -6,16 +6,16 @@ CFLAGS += -g
 LDFLAGS += -g
 endif
 
-TARGETS = tests/thrdtest tests/heavy tests/shutdown \
+TARGETS = tests/thirdtest tests/heavy tests/shutdown \
 	libthreadpool.so libthreadpool.a
 
 all: $(TARGETS)
 
 tests/shutdown: tests/shutdown.o src/threadpool.o
-tests/thrdtest: tests/thrdtest.o src/threadpool.o
+tests/thirdtest: tests/thirdtest.o src/threadpool.o
 tests/heavy: tests/heavy.o src/threadpool.o
 src/threadpool.o: src/threadpool.c src/threadpool.h
-tests/thrdtest.o: tests/thrdtest.c src/threadpool.h
+tests/thirdtest.o: tests/thirdtest.c src/threadpool.h
 tests/heavy.o: tests/heavy.c src/threadpool.h
 
 # Short-hand aliases
@@ -36,6 +36,6 @@ clean:
 
 test: $(TARGETS)
 	./tests/shutdown
-	./tests/thrdtest
+	./tests/thirdtest
 	./tests/heavy
 
