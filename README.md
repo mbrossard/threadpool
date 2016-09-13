@@ -23,9 +23,10 @@ some additional options:
  * Support Windows API (medium)
  * Reduce locking contention (medium/hard)
  
- Update of Cmake Build Support
- =====================
-If your operating system installs [cmake](https://cmake.org/), then you could do as follows.
+Update of Cmake Build Support
+=====================
+If your operating system installs [cmake](https://cmake.org/), then you could do as follows.   
+
 - create a build dir, in current dir
 ```zsh
 mkdir build
