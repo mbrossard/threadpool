@@ -2,3 +2,9 @@
 *.a
 *.o
 *~
+
+#ignore ide configs
+.idea
+
+#ignore build directory
+build
