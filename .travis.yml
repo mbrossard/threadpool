@@ -46,7 +46,6 @@ matrix:
     osx_image: xcode8
 
 before_install:
-  - if [ "$TRAVIS_OS_NAME" == osx -a "$INSTALL" == gcc5 ] ; then brew update || true ; fi
   - if [ "$TRAVIS_OS_NAME" == osx -a "$INSTALL" ] ; then brew install $INSTALL || true ; fi
 
 script:
