@@ -1,4 +1,8 @@
 *.so
 *.a
 *.o
+*.o.d
 *~
+tests/heavy
+tests/shutdown
+tests/thrdtest
