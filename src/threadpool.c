@@ -255,6 +255,7 @@ int threadpool_free(threadpool_t *pool)
            mutex and condition variable, we're sure they're
            initialized. Let's lock the mutex just in case. */
         pthread_mutex_lock(&(pool->lock));
+        pthread_mutex_unlock(&(pool->lock));
         pthread_mutex_destroy(&(pool->lock));
         pthread_cond_destroy(&(pool->notify));
     }
