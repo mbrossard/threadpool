@@ -5,11 +5,6 @@ branches:
   only:
     - master
 
-jobs:
-  allow_failures:
-  - os: osx
-    compiler: gcc-9.2
-
 matrix:
   include:
   - os: linux
@@ -20,12 +15,8 @@ matrix:
     compiler: clang
     osx_image: xcode11.3
   - os: osx
-    env: INSTALL=gcc
-    compiler: gcc-9.2
+    compiler: /usr/local/bin/gcc
     osx_image: xcode11.3
-
-before_install:
-  - if [ "$TRAVIS_OS_NAME" == osx -a "$INSTALL" ] ; then brew install $INSTALL || true ; fi
 
 script:
   - make
