@@ -13,7 +13,7 @@ Currently, the implementation:
 Possible enhancements
 =====================
 
-The API contains addtional unused 'flags' parameters that would allow
+The API contains additional unused 'flags' parameters that would allow
 some additional options:
 
  * Lazy creation of threads (easy)
