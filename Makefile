@@ -1,41 +1,51 @@
-CFLAGS = -D_REENTRANT -Wall -pedantic -Isrc
-LDLIBS = -lpthread
+CFLAGS := -D_REENTRANT -Wall -pedantic -Isrc
+CFLAGS += -fPIC
+LDFLAGS = -lpthread
+
+LIBNAME = libthreadpool
+SHARED_SUFFIX = .so
+STATIC_SUFFIX = .a
 
 ifdef DEBUG
 CFLAGS += -g
 LDFLAGS += -g
 endif
 
-TARGETS = tests/thrdtest tests/heavy tests/shutdown \
-	libthreadpool.so libthreadpool.a
+SHARED = $(LIBNAME)$(SHARED_SUFFIX)
+STATIC = $(LIBNAME)$(STATIC_SUFFIX)
+
+TARGETS = $(SHARED) $(STATIC)
 
 all: $(TARGETS)
 
-tests/shutdown: tests/shutdown.o src/threadpool.o
-tests/thrdtest: tests/thrdtest.o src/threadpool.o
-tests/heavy: tests/heavy.o src/threadpool.o
-src/threadpool.o: src/threadpool.c src/threadpool.h
-tests/thrdtest.o: tests/thrdtest.c src/threadpool.h
-tests/heavy.o: tests/heavy.c src/threadpool.h
+OBJS := \
+	src/threadpool.o
 
-# Short-hand aliases
-shared: libthreadpool.so
-static: libthreadpool.a
+deps := $(OBJS:%.o=%.o.d)
+src/%.o: src/%.c
+	$(CC) $(CFLAGS) -o $@ -MMD -MF $@.d -c $<
+tests/%: tests/%.c $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-libthreadpool.so: src/threadpool.c src/threadpool.h
-	$(CC) -shared -fPIC ${CFLAGS} -o $@ $< ${LDLIBS}
+TESTS =
+TESTS += tests/shutdown
+TESTS += tests/thrdtest
+TESTS += tests/heavy
 
-src/libthreadpool.o: src/threadpool.c src/threadpool.h
-	$(CC) -c -fPIC ${CFLAGS} -o $@ $<
+$(LIBNAME)$(SHARED_SUFFIX): $(OBJS)
+	$(CC) -shared -o $@ $< ${LDLIBS}
 
-libthreadpool.a: src/libthreadpool.o
-	ar rcs $@ $^
+$(LIBNAME)$(STATIC_SUFFIX): $(OBJS)
+	$(AR) rcs $@ $^
 
 clean:
-	rm -f $(TARGETS) *~ */*~ */*.o
+	rm -f $(TARGETS) *~ */*~ $(OBJS) $(deps)
 
-test: $(TARGETS)
-	./tests/shutdown
-	./tests/thrdtest
-	./tests/heavy
+test: check
+check: $(TESTS)
+	@for test in $^ ; \
+	do \
+		echo "Execute $$test..." ; $$test && echo "OK!\n" ; \
+	done
 
+-include $(deps)
